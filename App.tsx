@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react"
+import { NavigationContainer } from "@react-navigation/native"
+import { createStackNavigator } from "@react-navigation/stack"
+import HomeComponent from "./src/Home"
+import CheckoutProvider from "./src/context/CheckoutContext"
+import CheckoutScreen from "./src/Checkout"
+import CheckoutListScreen from "./src/CheckoutList"
+import { CarProvider } from "./src/context/CarContext"
+import ReturnCarScreen from "./src/ReturnCar"
+import ReturnCarListScreen from "./src/ReturnCarList"
+
+const Stack = createStackNavigator()
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <CarProvider>
+      <CheckoutProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName='Home'>
+            <Stack.Screen name='Cars' component={HomeComponent} />
+            <Stack.Screen name='Checkout' component={CheckoutScreen} />
+            <Stack.Screen name='CheckoutList' component={CheckoutListScreen} />
+            <Stack.Screen name='ReturnCar' component={ReturnCarScreen} />
+            <Stack.Screen name='ReturnList' component={ReturnCarListScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </CheckoutProvider>
+    </CarProvider>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
